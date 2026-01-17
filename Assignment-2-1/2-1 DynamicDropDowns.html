@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 1/17/2026 WDV321
+		purpose of this assignment is to demonstrate dynamic drop-down lists in JS.	
+        acknowledgements: assisted by ChatGPT to debug, optimize code, and improve clarity by adding documentation.
+		-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WDV321 Advanced JavaScript</title>
+    <title>WDV321 Advancedxxx JavaScript</title>
     <style>
         #container {
             background-color: blanchedalmond;
@@ -26,11 +32,18 @@
 
     </style>
     <script>
+        /*
+            Data sources for the page
 
-        const teamNames = ["Chiefs","Raiders","Cubs"];
-        const cookeis = ["Chocolate Chip Cookie", "Sugar Cookie", "Peanut Butter Cookie"];
-        const candies = ["M&Ms","Baby Ruth","Snickes"];
-
+            - Update these arrays to change the default items shown on load.
+            - `teamNames` is used in the Team Names <select> via document.write().
+            - `cookies` / `candies` are used to populate the Products <select> via createElement().
+            - `cookeis` is kept as an alias in case older code referenced the misspelling.
+        */
+        const teamNames = ["Chiefs", "Raiders", "Cubs"];
+        const cookies = ["Chocolate Chip Cookie", "Sugar Cookie", "Peanut Butter Cookie"];
+        const cookeis = cookies;
+        const candies = ["M&Ms", "Baby Ruth", "Snickes"];
     </script>
 </head>
 <body>
@@ -39,7 +52,7 @@
 
         </header>
         <main>
-            <h1>WDV321 Advanced JavaScript</h1>
+            <h1>WDV321 Advancedxxx JavaScript</h1>
             <h2>Dynamic Content - Drop Down Lists</h2>
             <p>The goals of this assignment:
                 <ol>
@@ -57,6 +70,22 @@
                         <label for="teamNames">Team Names</label>
                         <select name="teamNames" id="teamNames">
                             <option value="">Select a team</option>
+                            <script>
+                                <!--
+                                    Assignment requirement: populate this <select> using document.write().
+
+                                    Note: document.write() runs while the browser is parsing the HTML, so the
+                                    options appear inside the <select>. Later changes (Add/Reset) are done
+                                    with DOM methods (createElement/appendChild) in the script at the bottom.
+                                -->
+                                document.write(
+                                    teamNames
+                                        .map(function (name) {
+                                            return '<option value="' + name + '">' + name + '</option>';
+                                        })
+                                        .join('')
+                                );
+                            </script>
                         </select>
                         <p>Team Name: <span id="outputName"></span></p>
                     </div>
@@ -66,8 +95,8 @@
                             <input type="text" name="newTeamName" id="newTeamName">
                         </form>
                         <p>
-                            <input type="submit" value="Add Team Name">
-                            <input type="reset">
+                            <input type="button" id="addTeamNameBtn" value="Add Team Name">
+                            <input type="button" id="teamResetBtn" value="Reset">
                         </p>
                     </div> 
                     <div>
@@ -98,6 +127,9 @@
                         <label for="displayCandy">Candy: </label>
                         <input type="radio" name="chooseProduct" id="displayCandy">
                     </p>
+                    <p>
+                        <input type="button" id="productResetBtn" value="Reset">
+                    </p>
                     <div>
                         <h4>Instructions:</h4>
                         <ol>
@@ -116,6 +148,141 @@
 
         </footer>
     </div>
+
+    <script>
+        (function () {
+            /*
+                Page logic
+
+                This script runs after the HTML has loaded, so `getElementById` works.
+                It manages two independent sections:
+                1) Team Names (left)
+                2) Cookies/Candy (right)
+            */
+
+            // Shared helper: clears existing options (except the first placeholder) and rebuilds from an array.
+            // `placeholderValue` should match the value used by the first <option> in each <select>.
+            function setOptions(selectEl, items, placeholderValue) {
+                while (selectEl.options.length > 1) {
+                    selectEl.remove(1);
+                }
+
+                for (let i = 0; i < items.length; i++) {
+                    const option = document.createElement('option');
+                    option.value = items[i];
+                    option.textContent = items[i];
+                    selectEl.appendChild(option);
+                }
+
+                selectEl.value = placeholderValue;
+            }
+
+            // =====================
+            // Team Names section
+            // =====================
+            const teamSelect = document.getElementById('teamNames');
+            const outputName = document.getElementById('outputName');
+            const newTeamNameInput = document.getElementById('newTeamName');
+            const addTeamNameBtn = document.getElementById('addTeamNameBtn');
+            const teamResetBtn = document.getElementById('teamResetBtn');
+
+            // Snapshot of the original team list so Reset can restore it.
+            const initialTeamNames = teamNames.slice();
+
+            // Writes the currently selected team into the <span id="outputName">.
+            function renderTeamName() {
+                outputName.textContent = teamSelect.value;
+            }
+
+            // Reads the text field and appends a new <option> to the Team Names <select>.
+            function addTeamName() {
+                const newTeamName = newTeamNameInput.value.trim();
+                if (!newTeamName) {
+                    return;
+                }
+
+                teamNames.push(newTeamName);
+
+                const option = document.createElement('option');
+                option.value = newTeamName;
+                option.textContent = newTeamName;
+                teamSelect.appendChild(option);
+
+                teamSelect.value = newTeamName;
+                renderTeamName();
+
+                newTeamNameInput.value = '';
+                newTeamNameInput.focus();
+            }
+
+            // Restores original team list + clears the text field and output.
+            function resetTeams() {
+                teamNames.length = 0;
+                for (let i = 0; i < initialTeamNames.length; i++) {
+                    teamNames.push(initialTeamNames[i]);
+                }
+
+                setOptions(teamSelect, initialTeamNames, '');
+                newTeamNameInput.value = '';
+                renderTeamName();
+            }
+
+            // =====================
+            // Cookies/Candy section
+            // =====================
+            const productSelect = document.getElementById('productDisplay');
+            const outputProduct = document.getElementById('outputProduct');
+            const displayCookies = document.getElementById('displayCookies');
+            const displayCandy = document.getElementById('displayCandy');
+            const productResetBtn = document.getElementById('productResetBtn');
+
+            // Writes the currently selected product into the <span id="outputProduct">.
+            function renderSelectedProduct() {
+                outputProduct.textContent = productSelect.value === 'none' ? '' : productSelect.value;
+            }
+
+            // When Cookies radio is selected, rebuild product options from `cookies`.
+            function showCookies() {
+                if (!displayCookies.checked) {
+                    return;
+                }
+                setOptions(productSelect, cookies, 'none');
+                renderSelectedProduct();
+            }
+
+            // When Candy radio is selected, rebuild product options from `candies`.
+            function showCandy() {
+                if (!displayCandy.checked) {
+                    return;
+                }
+                setOptions(productSelect, candies, 'none');
+                renderSelectedProduct();
+            }
+
+            // Resets products back to the default state: radios cleared, dropdown back to Cookies list.
+            function resetProducts() {
+                displayCookies.checked = false;
+                displayCandy.checked = false;
+                setOptions(productSelect, cookies, 'none');
+                renderSelectedProduct();
+            }
+
+            // Bind events
+            teamSelect.addEventListener('change', renderTeamName);
+            addTeamNameBtn.addEventListener('click', addTeamName);
+            teamResetBtn.addEventListener('click', resetTeams);
+
+            productSelect.addEventListener('change', renderSelectedProduct);
+            displayCookies.addEventListener('change', showCookies);
+            displayCandy.addEventListener('change', showCandy);
+            productResetBtn.addEventListener('click', resetProducts);
+
+            // Initial state on page load
+            setOptions(productSelect, cookies, 'none');
+            renderTeamName();
+            renderSelectedProduct();
+        })();
+    </script>
 
 </body>
 </html>
