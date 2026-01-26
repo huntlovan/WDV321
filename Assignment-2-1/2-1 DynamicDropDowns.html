@@ -3,7 +3,7 @@
 <head>
     <!--<meta name="author" content="Hunter Lovan">-->
 	<!--Comment
-		Hunter Lovan 1/17/2026 WDV321
+		Hunter Lovan 1/20/2026 WDV321
 		purpose of this assignment is to demonstrate dynamic drop-down lists in JS.	
         acknowledgements: assisted by ChatGPT to debug, optimize code, and improve clarity by adding documentation.
 		-->
@@ -54,6 +54,7 @@
         <main>
             <h1>WDV321 Advancedxxx JavaScript</h1>
             <h2>Dynamic Content - Drop Down Lists</h2>
+            <p><a href="../wdv321Homework.html">Back to Homework Page</a></p>
             <p>The goals of this assignment:
                 <ol>
                     <li>Demonstrate how to dynamically populate a select element using the document.write() technique</li>
@@ -278,6 +279,13 @@
             productResetBtn.addEventListener('click', resetProducts);
 
             // Initial state on page load
+            // Some browsers treat <script> inside <select> as invalid markup and will
+            // ignore/move it, which can prevent the Team Names options from rendering.
+            // Keep the document.write() approach for the assignment, but add this
+            // runtime fallback so the dropdown is always populated.
+            if (teamSelect.options.length <= 1) {
+                setOptions(teamSelect, teamNames, '');
+            }
             setOptions(productSelect, cookies, 'none');
             renderTeamName();
             renderSelectedProduct();
