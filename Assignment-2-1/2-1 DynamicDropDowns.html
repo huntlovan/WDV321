@@ -284,10 +284,9 @@
             productResetBtn.addEventListener('click', resetProducts);
 
             // Initial state on page load
-            // Some browsers treat <script> inside <select> as invalid markup and will
-            // ignore/move it, which can prevent the Team Names options from rendering.
             // Keep the document.write() approach for the assignment, but add this
             // runtime fallback so the dropdown is always populated.
+			// Might be a better way to ensure they're loaded, but for now, this works.
             if (teamSelect.options.length <= 1) {
                 setOptions(teamSelect, teamNames, '');
             }
@@ -299,5 +298,6 @@
 
 </body>
 </html>
+
 
 
