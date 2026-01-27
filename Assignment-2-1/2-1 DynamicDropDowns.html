@@ -150,13 +150,20 @@
 
     <script>
         (function () {
-            /*
+              /*
                 Page logic
 
                 This script runs after the HTML has loaded, so `getElementById` works.
                 It manages two independent sections:
                 1) Team Names (left)
                 2) Cookies/Candy (right)
+
+                Note: This entire script block (all functions + event wiring) can be
+                moved into a separate JavaScript file (e.g. "dynamicDropDowns.js").
+                TODO: When I do this, I need to include it at the end of <body> with something like:
+                &lt;script src="dynamicDropDowns.js"&gt;&lt;/script&gt;
+                Keeping it at the end of <body> preserves* the current behavior where
+                the DOM exists before the script runs.
             */
 
             // Shared helper: clears existing options (except the first placeholder) and rebuilds from an array.
@@ -292,4 +299,5 @@
 
 </body>
 </html>
+
 
