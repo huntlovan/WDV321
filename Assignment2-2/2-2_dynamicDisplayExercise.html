@@ -1,1 +1,180 @@
+<!doctype html>
+<html>
+<head>
+    <!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 2/03/2026 WDV321
+		Purpose of this exercise is to show how to use CSS display property to show/remove content from the document object.  
+        This technique is useful when you have a selection of page content that only displays as needed.  
+        The user controls what content is displayed based upon their selection or activity.
+        This technique could be used to show/remove items in a survey form based upon previous questions, an image display function that 
+        changes the image being displayed based upon a mouseover or displaying content blocks based upon user selection. 
+        
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+		-->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>WDV321 Advanced Javascript</title>
+	<style>
+		.displayContainer {
+			border:thin solid black;
+			width:50%;
+			margin-left:20px;
+			padding:10px;
+		}
 
+		.contentBlock {
+			margin-top: 10px;
+		}
+
+		/*
+			IMPLEMENTED VERSION (recommended):
+			- Uses a reusable CSS class (.hidden) so you don't need to list every id in CSS.
+			- Scales better when you add more content blocks.
+		*/
+		.hidden {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+<p><a href="../wdv321Homework.html">Back to Homework Page</a></p>
+	<h1>WDV321 Advanced Javascript</h1>
+	<h2>Dynamic Structure -  Display Property Exercise</h2>
+  <p>Use this page as the basis for your assignment. You are welcome to change the content, layout and style of this page as desired. </p>
+
+  <p>Create the following content areas on the page using HTML.</p>
+	<ol>
+	  <li>Create a div that contains a new drop down list with at least four common Complaints to a company. </li>
+	  <li>Create a div that contains four Technical Problems displayed as a  set of checkboxes. </li>
+	  <li>Create a div that contains four Product Issues displayed as a set of radio buttons.</li>
+	  <li>Use the display property to remove these content containers from the page.</li>
+  </ol>
+	<p>
+		Based on the selection from the &quot;Reason For Contact&quot; drop down, dynamically
+		display the requested content in the Display Container section. For this exercise use
+		the CSS display property to show/remove the requested content areas.
+	</p>
+	<h4>Customer Service Complaints:</h4>
+	<p>
+		<label>Reason For Contact:
+		  <select name="contactType" id="contactType">
+			<option value="">Select Reason</option>
+			<option value="C">Complaints</option>
+			<option value="T">Technical Problems</option>
+			<option value="P">Product Issues</option>
+		  </select>
+		</label>
+  </p>
+	<section class="displayContainer">
+		<div id="complaintsBlock" class="contentBlock hidden">
+			<h4>Common Complaints</h4>
+			<p>
+				<label>Complaint Type:
+					<select name="complaintType" id="complaintType">
+						<option value="">Select a complaint</option>
+						<option value="wait">Long wait time</option>
+						<option value="billing">Billing mistake</option>
+						<option value="service">Unhelpful customer service</option>
+						<option value="shipping">Shipping/delivery delay</option>
+					</select>
+				</label>
+			</p>
+		</div>
+
+		<div id="technicalBlock" class="contentBlock hidden">
+			<h4>Technical Problems</h4>
+			<p>Select all that apply:</p>
+			<p>
+				<label><input type="checkbox" name="techProblem" value="login"> Can't log in</label><br>
+				<label><input type="checkbox" name="techProblem" value="slow"> App/site is slow</label><br>
+				<label><input type="checkbox" name="techProblem" value="crash"> App keeps crashing</label><br>
+				<label><input type="checkbox" name="techProblem" value="payment"> Payment won't process</label>
+			</p>
+		</div>
+
+		<div id="productBlock" class="contentBlock hidden">
+			<h4>Product Issues</h4>
+			<p>Choose one:</p>
+			<p>
+				<label><input type="radio" name="productIssue" value="damaged"> Item arrived damaged</label><br>
+				<label><input type="radio" name="productIssue" value="missing"> Missing parts/accessories</label><br>
+				<label><input type="radio" name="productIssue" value="wrong"> Wrong item received</label><br>
+				<label><input type="radio" name="productIssue" value="quality"> Poor quality / not as described</label>
+			</p>
+		</div>
+	</section>
+	<p> </p>
+	<p>&nbsp;</p>
+
+	<script>
+		/*
+			IMPLEMENTED VERSION (better) - why:
+			- Keeps variables scoped (not global), which avoids naming conflicts.
+			- Uses addEventListener so you can add multiple handlers later.
+			- Uses a CSS class (.hidden) instead of hard-coding display rules per element.
+		*/
+		(function () {
+			const contactTypeSelect = document.getElementById('contactType');
+			const complaintsBlock = document.getElementById('complaintsBlock');
+			const technicalBlock = document.getElementById('technicalBlock');
+			const productBlock = document.getElementById('productBlock');
+
+			function hideAll() {
+				complaintsBlock.classList.add('hidden');
+				technicalBlock.classList.add('hidden');
+				productBlock.classList.add('hidden');
+			}
+
+			function updateDisplay() {
+				hideAll();
+
+				switch (contactTypeSelect.value) {
+					case 'C':
+						complaintsBlock.classList.remove('hidden');
+						break;
+					case 'T':
+						technicalBlock.classList.remove('hidden');
+						break;
+					case 'P':
+						productBlock.classList.remove('hidden');
+						break;
+					default:
+						// nothing selected
+				}
+			}
+
+			contactTypeSelect.addEventListener('change', updateDisplay);
+			updateDisplay();
+		})();
+
+		/*
+			LESS-ADVANCED VERSION (kept for reference, commented out):
+			- Uses global vars + direct style.display changes.
+			- Works, but is harder to maintain as the page grows.
+
+		var contactTypeSelect = document.getElementById('contactType');
+		var complaintsBlock = document.getElementById('complaintsBlock');
+		var technicalBlock = document.getElementById('technicalBlock');
+		var productBlock = document.getElementById('productBlock');
+
+		function updateBlocks() {
+			complaintsBlock.style.display = 'none';
+			technicalBlock.style.display = 'none';
+			productBlock.style.display = 'none';
+
+			if (contactTypeSelect.value === 'C') {
+				complaintsBlock.style.display = 'block';
+			} else if (contactTypeSelect.value === 'T') {
+				technicalBlock.style.display = 'block';
+			} else if (contactTypeSelect.value === 'P') {
+				productBlock.style.display = 'block';
+			}
+		}
+
+		contactTypeSelect.onchange = updateBlocks;
+		updateBlocks();
+		*/
+	</script>
+</body>
+</html>
