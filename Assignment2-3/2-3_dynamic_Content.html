@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 2/10/2026 WDV321
+		Purpose of this exercise is to show how to use JavaScript to create dynamic HTML content such as dropdown options, radio buttons, and other elements.       
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+		-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            padding: 16px;
+        }
+
+        .row {
+            margin-bottom: 16px;
+        }
+
+        .infoCard {
+            border: 1px solid #333;
+            background: #f7f7f7;
+            padding: 12px;
+            max-width: 520px;
+        }
+    </style>
+
+</head>
+<body>
+    <p><a href="../wdv321Homework.html">Back to Homework Page</a></p>
+    <h1>WDV321 Advanced Javascript</h1>
+	<h2>Dynamic Structure -  Display Property Exercise</h2>    
+    <p>This page uses <strong>createElement()</strong> + <strong>appendChild()</strong> to add content to the DOM.</p>
+
+    <div id="dynamicContent"></div>
+
+    <script>
+        // Data for the dynamic controls
+        // Requirement note: "three options including a default option" means 3 total options.
+        var gemsList = ["Diamond", "Sapphire"]; // default + 2 = 3 options total
+
+        var metalList = ["Yellow Gold", "White Gold", "Platinum"];
+        var metalValues = ["ygold", "wgold", "plat"];
+
+        var container = document.getElementById('dynamicContent');
+
+        // -------------------------
+        // 1) Drop down list
+        // -------------------------
+        var gemRow = document.createElement('div');
+        gemRow.className = 'row';
+
+        var gemLabel = document.createElement('label');
+        gemLabel.htmlFor = 'gemSelect';
+        gemLabel.textContent = 'Choose a gemstone: ';
+
+        var gemSelect = document.createElement('select');
+        gemSelect.name = 'gems';
+        gemSelect.id = 'gemSelect';
+
+        var defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Choose an option';
+        gemSelect.appendChild(defaultOption);
+
+        for (var i = 0; i < gemsList.length; i++) {
+            var option = document.createElement('option');
+            option.value = gemsList[i].toLowerCase();
+            option.textContent = gemsList[i];
+            gemSelect.appendChild(option);
+        }
+
+        gemRow.appendChild(gemLabel);
+        gemRow.appendChild(gemSelect);
+        container.appendChild(gemRow);
+
+        // -------------------------
+        // 2) Radio button group
+        // -------------------------
+        var metalRow = document.createElement('div');
+        metalRow.className = 'row';
+
+        var metalFieldset = document.createElement('fieldset');
+        var metalLegend = document.createElement('legend');
+        metalLegend.textContent = 'Select a metal:';
+        metalFieldset.appendChild(metalLegend);
+
+        for (var m = 0; m < metalList.length; m++) {
+            var radioWrap = document.createElement('div');
+
+            var radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'metal';
+            radio.id = metalValues[m];
+            radio.value = metalValues[m];
+
+            var radioLabel = document.createElement('label');
+            radioLabel.htmlFor = metalValues[m];
+            radioLabel.textContent = metalList[m];
+
+            radioWrap.appendChild(radio);
+            radioWrap.appendChild(radioLabel);
+            metalFieldset.appendChild(radioWrap);
+        }
+
+        metalRow.appendChild(metalFieldset);
+        container.appendChild(metalRow);
+
+        // -------------------------
+        // 3) Formatted div
+        // -------------------------
+        var infoDiv = document.createElement('div');
+        infoDiv.className = 'infoCard';
+
+        var infoTitle = document.createElement('h3');
+        infoTitle.textContent = 'Hello, this is a dynamically created info card!';
+
+        var infoPara = document.createElement('p');
+        infoPara.textContent = 'Hunter Lovan GitHub Page: ';
+
+        var infoLink = document.createElement('a');
+        infoLink.href = 'https://github.com/huntlovan';
+        infoLink.target = '_blank';
+        infoLink.rel = 'noopener';
+        infoLink.textContent = "Visit Hunter Lovan's GitHub";
+
+        infoPara.appendChild(infoLink);
+
+        infoDiv.appendChild(infoTitle);
+        infoDiv.appendChild(infoPara);
+        container.appendChild(infoDiv);
+    </script>
+</body>
+</html>
