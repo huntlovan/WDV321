@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 2/17/2026 WDV321
+		Purpose of this exercise is to show how to use JavaScript to create dynamic HTML content such as dropdown options, radio buttons, and other elements.       
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+  -->
   <meta charset="UTF-8">
   <title>Dynamic Game Selector</title>
 
@@ -59,21 +65,188 @@
       margin-top: 1rem;
       background-color: #fafafa;
     }
+
+    .message {
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+
+    .message.error {
+      background: #ffeaea;
+      border: 1px solid #d33;
+      color: #8a0000;
+    }
+
+    .message.success {
+      background: #eaffea;
+      border: 1px solid #2b8a3e;
+      color: #1f6f31;
+    }
   </style>
 
   <script>
     /*
-      Write all JavaScript inside this script block.
+      Beginner JS solution
 
-      Requirements:
-      - Use arrow functions
-      - Use addEventListener()
-      - Use DOMContentLoaded
+      Requirements met:
+      - Uses arrow functions
+      - Uses addEventListener()
+      - Uses DOMContentLoaded
     */
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1) Array of game categories (at least 3)
+      const categories = ['Action', 'RPG', 'Strategy'];
+
+      // Maps category name -> content section id
+      const categoryToSectionId = {
+        Action: 'action',
+        RPG: 'rpg',
+        Strategy: 'strategy'
+      };
+
+      const gameSelectContainer = document.getElementById('gameSelectContainer');
+      const newCategoryInput = document.getElementById('newCategory');
+      const addCategoryButton = document.getElementById('btnAddCategory');
+      const messageBox = document.getElementById('messageBox');
+
+      // The dropdown is created dynamically.
+      let gameSelect;
+
+      const normalizeName = (name) => name.trim().replace(/\s+/g, ' ');
+
+      const hideAllSections = () => {
+        const sections = document.querySelectorAll('.game-section');
+        sections.forEach((section) => {
+          section.style.display = 'none';
+        });
+      };
+
+      const showSectionForCategory = (categoryName) => {
+        hideAllSections();
+
+        const sectionId = categoryToSectionId[categoryName];
+        if (sectionId) {
+          const section = document.getElementById(sectionId);
+          if (section) section.style.display = 'block';
+          return;
+        }
+
+        // No matching content section needed for newly added categories.
+        const noContent = document.getElementById('noContent');
+        if (noContent) noContent.style.display = 'block';
+      };
+
+      const setMessage = (text, type) => {
+        if (!messageBox) return;
+        messageBox.textContent = text;
+        messageBox.className = `message ${type || ''}`;
+        messageBox.style.display = text ? 'block' : 'none';
+      };
+
+      const createDropdown = () => {
+        // Requirement: use createElement() to create and add the dropdown
+        gameSelect = document.createElement('select');
+        gameSelect.id = 'gameSelect';
+
+        gameSelectContainer.innerHTML = '';
+        gameSelectContainer.appendChild(gameSelect);
+
+        // When a category is selected, show matching section + hide others
+        gameSelect.addEventListener('change', () => {
+          setMessage('', '');
+
+          const selectedCategory = gameSelect.value;
+          if (!selectedCategory) {
+            hideAllSections();
+            return;
+          }
+
+          showSectionForCategory(selectedCategory);
+        });
+      };
+
+      const populateDropdown = () => {
+        // Clear all options
+        gameSelect.innerHTML = '';
+
+        // 3) Default option
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Select a Game Category';
+        gameSelect.appendChild(defaultOption);
+
+        // 2) Populate from the array
+        categories.forEach((category) => {
+          const option = document.createElement('option');
+          option.value = category;
+          option.textContent = category;
+          gameSelect.appendChild(option);
+        });
+
+        // Start with default selected
+        gameSelect.value = '';
+      };
+
+      const isDuplicateCategory = (candidateName) => {
+        const normalizedCandidate = normalizeName(candidateName).toLowerCase();
+        return categories.some((existing) => normalizeName(existing).toLowerCase() === normalizedCandidate);
+      };
+
+      const addCategory = () => {
+        const rawName = newCategoryInput.value;
+        const name = normalizeName(rawName);
+
+        // Validate filled in
+        if (!name) {
+          setMessage('Please enter a category name.', 'error');
+          newCategoryInput.focus();
+          return;
+        }
+
+        // Validate not a duplicate
+        if (isDuplicateCategory(name)) {
+          setMessage('That category already exists. Enter a different name.', 'error');
+          newCategoryInput.select();
+          return;
+        }
+
+        categories.push(name);
+        populateDropdown();
+
+        // Select the newly added category
+        gameSelect.value = name;
+        showSectionForCategory(name);
+
+        newCategoryInput.value = '';
+        newCategoryInput.focus();
+        setMessage(`Added: ${name}`, 'success');
+      };
+
+      // Initial setup
+      createDropdown();
+      populateDropdown();
+      hideAllSections();
+      setMessage('', '');
+
+      // Add new category
+      addCategoryButton.addEventListener('click', () => {
+        addCategory();
+      });
+
+      // Optional: Press Enter in the input to add
+      newCategoryInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          addCategory();
+        }
+      });
+    });
   </script>
 </head>
 <body>
-
+  <p><a href="../wdv321Homework.html">Back to Homework Page</a></p>
   <h1>Dynamic Game Selector</h1>
   <div class="instructions">
     <h2>Instructions</h2>
@@ -101,12 +274,15 @@
 
   <div class="activity-box">
     <label for="gameSelect">Game Categories</label>
-    <select id="gameSelect"></select>
+    <!-- Dropdown is created dynamically using createElement() -->
+    <div id="gameSelectContainer"></div>
 
     <label for="newCategory">Add New Category</label>
     <input type="text" id="newCategory" placeholder="Enter category name">
 
     <button id="btnAddCategory">Add Category</button>
+
+  <p id="messageBox" class="message" style="display:none;" aria-live="polite"></p>
 
     <!-- Game Category Content -->
     <div id="action" class="game-section">
@@ -122,6 +298,11 @@
     <div id="strategy" class="game-section">
       <h3>Strategy Games</h3>
       <p>Games that emphasize planning, tactics, and decision-making.</p>
+    </div>
+
+    <div id="noContent" class="game-section">
+      <h3>No Content Yet</h3>
+      <p>This category was added to the dropdown, but no matching content section is required for this assignment.</p>
     </div>
   </div>
 
