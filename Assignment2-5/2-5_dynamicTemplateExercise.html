@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 2/24/2026 WDV321
+		This exercise uses the <template> element to dynamically add structure/content to an application page. 
+        It is an alternative to using the createElement() technique for dynamically creating new structure/content.  
+        Compared to using the createElement() technique this process is often a much better option to create and 
+        populate complex or large pieces of content.           
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+  -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Template Exercise</title>
@@ -32,17 +41,18 @@
     <header>
         <h1>WDV321 Advanced JavaScript</h1>
         <h2>Dynamic Structure - Template Exercise</h2>
+        <p><a href="../wdv321Homework.html">Back to Homework Page</a></p>
     </header>
     <main>
         <h3>Dyanmic Form Fields</h3>
-        <form method="post" action="#">
+        <form id="registrationForm" method="post" action="#">
             <fieldset>
                 <legend>Student Registration Process:</legend>
                     <section>
                         <div class="studentInputLine">
                             <div>
                                 <label for="studentName1">Student Name: </label>
-                                <input type="text" namd="studentName1" id="studentName1">                        
+                                <input type="text" name="studentName1" id="studentName1">                        
                             </div>
                             <div>
                                 <label for="studentID1">Student ID: </label>
@@ -52,7 +62,7 @@
                         <div class="studentInputLine">
                             <div>
                                 <label for="studentName2">Student Name: </label>
-                                <input type="text" namd="studentName2" id="studentName2">                        
+                                <input type="text" name="studentName2" id="studentName2">                        
                             </div>
                             <div>
                                 <label for="studentID2">Student ID: </label>
@@ -62,7 +72,7 @@
                         <div class="studentInputLine">
                             <div>
                                 <label for="studentName3">Student Name: </label>
-                                <input type="text" namd="studentName3" id="studentName3">                        
+                                <input type="text" name="studentName3" id="studentName3">                        
                             </div>
                             <div>
                                 <label for="studentID3">Student ID: </label>
@@ -70,8 +80,31 @@
                             </div>
                         </div>                        
                     </section>
+
+                    <!--
+                        Template usage notes:
+                        - Its child nodes live in `template.content` (a DocumentFragment) which can be cloned.
+                        - When the user clicks "Add Another Student", JavaScript will:
+                            1) Clone `template.content` to get a fresh copy of the markup
+                            2) Update the placeholder ids/names (studentNameX, studentIDX) to unique values (studentName4, studentID4, etc.)
+                            3) Append the cloned nodes into the <section> inside the form
+                        This is cleaner than building the same structure with repeated createElement() calls.
+                    -->
+                    <template id="studentLineTemplate">
+                        <div class="studentInputLine">
+                            <div>
+                                <label for="studentNameX">Student Name: </label>
+                                <input type="text" name="studentNameX" id="studentNameX">
+                            </div>
+                            <div>
+                                <label for="studentIDX">Student ID: </label>
+                                <input type="text" name="studentIDX" id="studentIDX">
+                            </div>
+                        </div>
+                    </template>
+
                     <div>
-                        <input type="submit" value="Add Another Student">
+                        <button type="button" id="addStudentBtn">Add Another Student</button>
                     </div> 
                     <p>
                         <input type="submit" value="Submit Registrations">
@@ -93,5 +126,120 @@
         <p>WDV321 Advanced JavaScript Copyright:  All rights reserved.</p>
     </footer>
    </div> 
+
+   <script>
+    (() => {
+        const form = document.getElementById('registrationForm');
+        const addButton = document.getElementById('addStudentBtn');
+        const template = document.getElementById('studentLineTemplate');
+
+        if (!form || !addButton || !template) {
+            return;
+        }
+
+        const section = form.querySelector('fieldset section');
+
+        // Determines the next row number to use (keeps ids unique).
+        // Example: if studentName1..studentName3 exist, the next index is 4.
+        const getNextStudentIndex = () => {
+            const nameInputs = section.querySelectorAll('input[id^="studentName"]');
+            let maxIndex = 0;
+            nameInputs.forEach((input) => {
+                const match = input.id.match(/^studentName(\d+)$/);
+                if (match) {
+                    maxIndex = Math.max(maxIndex, Number(match[1]));
+                }
+            });
+            return maxIndex + 1;
+        };
+
+        // Creates one new "student input line" using the template.
+        const addStudentLine = () => {
+            const nextIndex = getNextStudentIndex();
+
+            // `template.content` is a DocumentFragment containing the template's nodes.
+            // `cloneNode(true)` copies the full subtree so we can safely modify/insert it.
+            const fragment = template.content.cloneNode(true);
+
+            const nameLabel = fragment.querySelector('label[for="studentNameX"]');
+            const nameInput = fragment.querySelector('#studentNameX');
+            const idLabel = fragment.querySelector('label[for="studentIDX"]');
+            const idInput = fragment.querySelector('#studentIDX');
+
+            if (!nameLabel || !nameInput || !idLabel || !idInput) {
+                return;
+            }
+
+            // Replace placeholder ids/names (X) with the nextIndex so labels and inputs stay linked.
+            nameLabel.htmlFor = `studentName${nextIndex}`;
+            nameInput.id = `studentName${nextIndex}`;
+            nameInput.name = `studentName${nextIndex}`;
+
+            idLabel.htmlFor = `studentID${nextIndex}`;
+            idInput.id = `studentID${nextIndex}`;
+            idInput.name = `studentID${nextIndex}`;
+
+            // Insert the cloned + updated markup into the live DOM.
+            section.appendChild(fragment);
+            nameInput.focus();
+        };
+
+        /*
+            Reference only (NOT USED): createElement() approach ** not as efficient or clean as the template method **
+
+            This builds the same DOM structure as the <template> version, but does it node-by-node.
+            It’s more verbose and easier to make mistakes with when the markup gets bigger.
+
+            To try it instead of the template approach, you would change the click handler to:
+                addButton.addEventListener('click', addStudentLine_createElement);
+
+            const addStudentLine_createElement = () => {
+                const nextIndex = getNextStudentIndex();
+
+                const row = document.createElement('div');
+                row.className = 'studentInputLine';
+
+                const nameDiv = document.createElement('div');
+                const nameLabel = document.createElement('label');
+                nameLabel.htmlFor = `studentName${nextIndex}`;
+                nameLabel.textContent = 'Student Name: ';
+
+                const nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.id = `studentName${nextIndex}`;
+                nameInput.name = `studentName${nextIndex}`;
+
+                nameDiv.appendChild(nameLabel);
+                nameDiv.appendChild(nameInput);
+
+                const idDiv = document.createElement('div');
+                const idLabel = document.createElement('label');
+                idLabel.htmlFor = `studentID${nextIndex}`;
+                idLabel.textContent = 'Student ID: ';
+
+                const idInput = document.createElement('input');
+                idInput.type = 'text';
+                idInput.id = `studentID${nextIndex}`;
+                idInput.name = `studentID${nextIndex}`;
+
+                idDiv.appendChild(idLabel);
+                idDiv.appendChild(idInput);
+
+                row.appendChild(nameDiv);
+                row.appendChild(idDiv);
+
+                section.appendChild(row);
+                nameInput.focus();
+            };
+        */
+
+        addButton.addEventListener('click', addStudentLine);
+
+        // This exercise is about dynamic fields; prevent actual submission/navigation :)
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+        });
+    })();
+   </script>
 </body>
 </html>
