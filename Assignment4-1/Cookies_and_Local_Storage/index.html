@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDV321 Advanced JavaScript</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color:burlywood;
+        }
+        #container {
+            width:70%;
+            margin-left:auto;
+            margin-right:auto;
+            padding-left:15px;
+            padding-right:15px;
+            background-color: chocolate;
+        }
 
+        header {
+            text-align: center;
+        }
+
+        nav {
+            display:flex;
+            justify-content: space-between;
+            margin-bottom:15px;
+        }
+
+        main {
+            display:flex;
+        }
+
+        main section {
+            width:50%;
+            border:thin solid black;
+
+        }
+
+        section h2, section h3 {
+            text-align: center;
+        }
+
+        form {
+            width: 70%;
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+
+        footer p {
+            text-align: center;
+        }
+    </style>
+    <script>
+        //Instructions:
+        //1. Create a JavaScript object called eventRegistration.  This object will hold one or more registrations
+        //  each registration will have a name, email, phone and registration date (use the current date)
+        //
+        //2. Create a hit counter that will record each time somebody comes to this page.  Store the hit counter in a cookie.
+        //  Each time somebody comes to this page display the current value of the hit counter next to "Current Activity:"
+
+        //Sign In button:
+        //When the sign in form is clicked the following will happen
+        //  a. Somewhere on the page display a form to accept the username and password.  Use one of methods we reviewed
+        //      to dynamically display the form when needed.
+        //  b. When that form is selected compare the input to the contents of the membersInfo object.
+        //  c. If you find a match in the membersInfo object create a cookie called authorizedUser with the username as its value.
+
+        let membersInfo = {
+            memberUserNames: [
+                "A1D2C4",
+                "B2D4C6",
+                "B3C2D1"
+            ]
+        }
+
+        let eventRegistration = {
+            registrations: []
+        };
+
+        function getCookie(cookieName) {
+            const cookies = document.cookie ? document.cookie.split(";") : [];
+            for (const cookie of cookies) {
+                const [name, ...rest] = cookie.trim().split("=");
+                if (name === cookieName) {
+                    return decodeURIComponent(rest.join("="));
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cookieName, cookieValue, daysToExpire) {
+            let expires = "";
+            if (typeof daysToExpire === "number") {
+                const date = new Date();
+                date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+                expires = `; expires=${date.toUTCString()}`;
+            }
+            document.cookie = `${cookieName}=${encodeURIComponent(cookieValue)}${expires}; path=/`;
+        }
+
+        function deleteCookie(cookieName) {
+            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+        }
+
+        function loadRegistrationsFromLocalStorage() {
+            const stored = localStorage.getItem("eventRegistration");
+            if (!stored) {
+                eventRegistration = { registrations: [] };
+                return;
+            }
+            try {
+                const parsed = JSON.parse(stored);
+                if (parsed && Array.isArray(parsed.registrations)) {
+                    eventRegistration = parsed;
+                } else {
+                    eventRegistration = { registrations: [] };
+                }
+            } catch {
+                eventRegistration = { registrations: [] };
+            }
+        }
+
+        function saveRegistrationsToLocalStorage() {
+            localStorage.setItem("eventRegistration", JSON.stringify(eventRegistration));
+        }
+
+        function incrementHomeHitCounter() {
+            const currentValue = parseInt(getCookie("hitCounter"), 10);
+            const nextValue = Number.isFinite(currentValue) ? currentValue + 1 : 1;
+            setCookie("hitCounter", String(nextValue), 30);
+            return nextValue;
+        }
+
+        function updateCurrentActivityDisplay(value) {
+            const el = document.getElementById("currentActivityValue");
+            if (el) el.textContent = String(value);
+        }
+
+        function renderSignInForm() {
+            const host = document.getElementById("signInHost");
+            if (!host) return;
+
+            if (host.childElementCount > 0) {
+                host.innerHTML = "";
+                return;
+            }
+
+            const form = document.createElement("form");
+            form.id = "signInForm";
+            form.noValidate = true;
+            form.innerHTML = `
+                <fieldset>
+                    <legend>Member Sign In</legend>
+                    <p>
+                        <label for="memberUsername">Username:</label><br>
+                        <input id="memberUsername" name="memberUsername" type="text" required autocomplete="off">
+                    </p>
+                    <p>
+                        <label for="memberPassword">Password:</label><br>
+                        <input id="memberPassword" name="memberPassword" type="password" required>
+                    </p>
+                    <p>
+                        <button type="submit">Submit</button>
+                        <button type="button" id="cancelSignIn">Cancel</button>
+                    </p>
+                    <p id="signInMessage" aria-live="polite"></p>
+                </fieldset>
+            `;
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const username = String(form.memberUsername.value || "").trim();
+                const password = String(form.memberPassword.value || "").trim();
+
+                const messageEl = form.querySelector("#signInMessage");
+                if (!username || !password) {
+                    if (messageEl) messageEl.textContent = "Please enter a username and password.";
+                    return;
+                }
+
+                const isAuthorized = membersInfo.memberUserNames.includes(username);
+                if (isAuthorized) {
+                    setCookie("authorizedUser", username, 1);
+                    if (messageEl) messageEl.textContent = "Sign in successful. Redirecting to Members Page...";
+                    window.setTimeout(() => {
+                        window.location.href = "members.html";
+                    }, 500);
+                } else {
+                    deleteCookie("authorizedUser");
+                    if (messageEl) messageEl.textContent = "Invalid credentials.";
+                }
+            });
+
+            form.querySelector("#cancelSignIn").addEventListener("click", () => {
+                host.innerHTML = "";
+            });
+
+            host.appendChild(form);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            loadRegistrationsFromLocalStorage();
+
+            const hits = incrementHomeHitCounter();
+            updateCurrentActivityDisplay(hits);
+
+            const registrationForm = document.getElementById("eventRegistrationForm");
+            const registrationMessage = document.getElementById("registrationMessage");
+
+            if (registrationForm) {
+                registrationForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+
+                    const name = String(registrationForm.guestName.value || "").trim();
+                    const email = String(registrationForm.guestEmail.value || "").trim();
+                    const phone = String(registrationForm.guestPhone.value || "").trim();
+
+                    if (!name || !email || !phone) {
+                        if (registrationMessage) registrationMessage.textContent = "Please complete all fields.";
+                        return;
+                    }
+
+                    if (!registrationForm.checkValidity()) {
+                        if (registrationMessage) registrationMessage.textContent = "Please fix the highlighted fields.";
+                        return;
+                    }
+
+                    const registration = {
+                        name,
+                        email,
+                        phone,
+                        registrationDate: new Date().toLocaleString()
+                    };
+
+                    eventRegistration.registrations.push(registration);
+                    saveRegistrationsToLocalStorage();
+                    registrationForm.reset();
+                    if (registrationMessage) registrationMessage.textContent = "Registration saved.";
+                });
+            }
+
+            const signInButton = document.getElementById("signInButton");
+            if (signInButton) {
+                signInButton.addEventListener("click", renderSignInForm);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1>Science Fiction Book Club</h1>
+            <h2>"Predicting the future using or describing the future?"</h2>
+        </header>
+
+        <nav>
+            <div>
+                <a href="index.html"><button>Home Page</button></a>
+                <a href="members.html"><button>Members Page</button></a>
+            </div>
+            <button id="signInButton" type="button">Sign In</button>
+        </nav>
+
+        <div id="signInHost"></div>
+
+        <main>
+            <section class="leftColumn">
+                <h3>Sign Up for our next Public Event</h3>
+                <form id="eventRegistrationForm" method="post" action="#" novalidate>
+                    <fieldset>
+                        <p>Event Registration Form</p>
+                        <h4>Form Instructions:</h4>
+                        <ol>
+                            <li>Create fields for Name, Email, Phone</li>
+                            <li>Include validation</li>
+                            <li>When the form is submitted capture the form data and add it to the eventRegistration object.</li>
+                            <li>Store the eventRegistration object in local storage</li>
+                        </ol>
+
+                        <p>
+                            <label for="guestName">Name:</label><br>
+                            <input id="guestName" name="guestName" type="text" required minlength="2">
+                        </p>
+                        <p>
+                            <label for="guestEmail">Email:</label><br>
+                            <input id="guestEmail" name="guestEmail" type="email" required>
+                        </p>
+                        <p>
+                            <label for="guestPhone">Phone (###-###-####):</label><br>
+                            <input id="guestPhone" name="guestPhone" type="tel" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-555-5555">
+                        </p>
+                        <p>
+                            <button type="submit">Submit Registration</button>
+                        </p>
+                        <p id="registrationMessage" aria-live="polite"></p>
+
+                    </fieldset>
+                </form>
+            </section>
+            <section class="rightColumn">
+                <h3>Upcoming Events</h3>
+                <div>
+                    <h3>"Did Star Trek predict AI?"</h3>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Copyright &copy;YYYY All rights reserved.</p>
+            <p>Current Activity: <span id="currentActivityValue">0</span></p>
+        </footer>
+
+    </div>
+</body>
+</html>
