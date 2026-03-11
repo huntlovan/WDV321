@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 3/10/2026 WDV321
+		Purpose: is demonstrate the use of JavaScript objects, local storage, cookies, and dynamic form handling in a web page.
+        This is the home page for the Science Fiction Book Club.  This page includes a form to register for an upcoming event and a hit counter that tracks how many times the page has been visited.  The form data is stored in local storage and the hit counter is stored in a cookie.  There is also a sign in button that allows members to sign in and access the members page.  The members page is protected by a cookie that is set when a member successfully signs in.
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+  -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WDV321 Advanced JavaScript</title>
@@ -56,20 +63,7 @@
         }
     </style>
     <script>
-        //Instructions:
-        //1. Create a JavaScript object called eventRegistration.  This object will hold one or more registrations
-        //  each registration will have a name, email, phone and registration date (use the current date)
-        //
-        //2. Create a hit counter that will record each time somebody comes to this page.  Store the hit counter in a cookie.
-        //  Each time somebody comes to this page display the current value of the hit counter next to "Current Activity:"
-
-        //Sign In button:
-        //When the sign in form is clicked the following will happen
-        //  a. Somewhere on the page display a form to accept the username and password.  Use one of methods we reviewed
-        //      to dynamically display the form when needed.
-        //  b. When that form is selected compare the input to the contents of the membersInfo object.
-        //  c. If you find a match in the membersInfo object create a cookie called authorizedUser with the username as its value.
-
+      // Simulated member data for authentication
         let membersInfo = {
             memberUserNames: [
                 "A1D2C4",
@@ -81,7 +75,7 @@
         let eventRegistration = {
             registrations: []
         };
-
+x1x1x
         function getCookie(cookieName) {
             const cookies = document.cookie ? document.cookie.split(";") : [];
             for (const cookie of cookies) {
