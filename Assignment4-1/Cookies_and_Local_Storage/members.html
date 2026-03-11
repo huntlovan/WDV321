@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 3/10/2026 WDV321
+		Purpose: is demonstrate the use of JavaScript objects, local storage, cookies, and dynamic form handling in a web page.
+        This is the home page for the Science Fiction Book Club.  This page includes a form to register for an upcoming event and a hit counter that tracks how many times the page has been visited.  The form data is stored in local storage and the hit counter is stored in a cookie.  There is also a sign in button that allows members to sign in and access the members page.  The members page is protected by a cookie that is set when a member successfully signs in.
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+  -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WDV321 Advanced JavaScript</title>
@@ -59,19 +67,6 @@
         }
     </style>
     <script>
-        //Instructions:
-        //1. This page will check for an authorized user cookie.  If there isn't one return the user to the home/index page.
-        //      If it is an authorized user then display the page and contents.
-        //
-        //2. Each time an authorized user comes to this page display the current value of the hit counter next to "Current Activity:"
-        //
-        //3. Access the eventRegistration object from local storage.
-        //      Display the guest information as formatted content under "Current Registrations" in the right column
-        //      Number the guests
-        //
-        //4. Display Cookie button should show the current cookies in the console
-        //5. Delete Cookie button should delete the authorization
-
         // This function is a utility to get a cookie value by name
         // example: decodeURIComponent("city%3DDes%20Moines%26state%3DIA") → "city=Des Moines&state=IA"
         // note: this function assumes cookies are in the format "name=value; name2=value2; ..."
