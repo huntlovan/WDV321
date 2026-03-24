@@ -1,0 +1,6 @@
+due may 5th
+Upload the Movie Rating project we worked on in class to your github repo.
+
+Provide a screenshot of the application running on your computer in your browser.
+
+Submit this assignment using your homework page, which should have a link to your Github repo.
