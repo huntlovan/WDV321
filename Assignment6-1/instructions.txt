@@ -1,0 +1,16 @@
+Use the mochaTestValidations application as the basis for this assignment. 
+
+Your assignment is to create a function, test it using Mocha/Chai to prove that all inputs produce the expected results.
+
+The function description and test plan is provided in the attached text document.
+
+Some steps you will need to do for this assignment:
+
+Create a new file called validateComparison.js in the app folder of the application. This is the JavaScript code that you wish to test.  
+Use the attached test plan for input values and expected results used to test the function. Place the test plan within the validateComparison.js file as a block comment. 
+Refactor the validateComparison.js file with the code necessary to meet the defined tests.
+Take a snapshot/screenshot of the completed report when finished.
+
+Update your files into your Git repo.
+
+Include the screenshot and repo link when you submit this on Blackboard.
