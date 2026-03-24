@@ -1,0 +1,6 @@
+Research the Typescript environment.  Use typescript to create a mini application to demonstrate to the class.
+
+Examples of mini applications:
+
+Tip Calculator - Enter the bill amount, dropdown to select percentage (10, 15, 20), click button to show tip amount.
+Temperature Converter - Enter a temperature, dropdown to choose unit to convert from, outputs the converted temperature value and unit that it was converted to.
