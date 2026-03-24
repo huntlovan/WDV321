@@ -1,0 +1,22 @@
+For this assignment, you will extend the movie rating application built in Week 1. The goal is to reinforce React fundamentals by adding new functionality while working within the existing component structure.
+
+Instructions:
+
+Add a “watched” button to track watched status. Store the status in a separate state variable in the MovieCard component.
+
+Optional challenge (not required to receive full credit) - Store the watched status in the movies array in the App component instead of state in the MovieCard component.
+Validate movie names before adding them to make sure the name is not blank.
+
+ Display an alert or update the display to indicate the error.
+
+If you decide to update the display, be sure to clear errors once the user successfully adds a movie.
+
+This assignment builds directly on concepts from Week 1, so you should reuse and extend your existing application.
+
+ 
+
+Upload your completed application to Github.
+
+Submit a link to your homework page. Your homework page should contain a link to your github repo.
+
+Upload a screenshot or a video demonstrating your running application.
