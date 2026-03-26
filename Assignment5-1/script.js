@@ -1,3 +1,6 @@
+// script.js - Use async / await or promise chaining
+// Handle unsuccessful API requests (error handling)
+// Display a user-friendly error message, do not let errors fail silently
 const countryInput = document.getElementById("countryInput");
 const searchBtn = document.getElementById("searchBtn");
 const statusMessage = document.getElementById("statusMessage");
@@ -33,6 +36,8 @@ function renderCountries(countries) {
   resultsContainer.innerHTML = cardsHtml;
 }
 
+// async function to fetch country data from the hardcoded API url, handle errors, and return the data.
+// Uses the Rest Countries API: https://restcountries.com/v3.1/name/{name} 
 async function fetchCountryData(countryName) {
   const endpoint = `https://restcountries.com/v3.1/name/${encodeURIComponent(countryName)}?fullText=false`;
 
