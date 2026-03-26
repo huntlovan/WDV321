@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Country Lookup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="kicker">API Fetch Assignment</p>
+      <h1>REST Countries Explorer</h1>
+      <p class="subtitle">Search for a country and view key details without reloading the page.</p>
+    </header>
+
+    <section class="search-panel" aria-label="Country search">
+      <label for="countryInput">Country Name</label>
+      <div class="input-row">
+        <input id="countryInput" name="country" type="text" placeholder="Try Japan, Brazil, Kenya..." autocomplete="off" />
+        <button id="searchBtn" type="button">Search</button>
+      </div>
+      <p class="hint">Data source: REST Countries API</p>
+    </section>
+
+    <section class="results-panel" aria-live="polite" aria-busy="false">
+      <p id="statusMessage" class="status" role="status"></p>
+      <div id="results" class="results-grid"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
