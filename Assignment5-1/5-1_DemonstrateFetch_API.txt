@@ -1,0 +1,23 @@
+5-1 Demonstrate Fetch API
+For this assignment, you will retrieve data from a public web API and display it dynamically based on user interaction.
+
+This assignment focuses on how JavaScript communicates with servers and updates the UI without reloading the page using asynchronous techniques.
+
+Detailed instructions are provided in the downloaded files.
+
+Functional Requirements:
+
+Use the Fetch API
+Use async / await or promise chaining
+Handle unsuccessful API requests (error handling)
+Display a user-friendly error message, do not let errors fail silently
+Display response data on the page
+
+This can be a list or a "card" format
+Limit the results to 20 countries
+Use the following public REST Countries API – https://restcountries.com/#endpoints-nameLinks to an external site.
+
+Example URL - https://restcountries.com/v3.1/all?fields=name,capital,currenciesLinks to an external site.
+
+Additional details on this are included in the download files.
+Add styling as needed to format the results
