@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!--<meta name="author" content="Hunter Lovan">-->
+	<!--Comment
+		Hunter Lovan 3/26/2026 WDV321
+		Purpose of this exercise is to show how to use asynch function in JavaScript to call REST API.       
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+  -->
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Country Lookup</title>
@@ -20,7 +27,7 @@
     <section class="search-panel" aria-label="Country search">
       <label for="countryInput">Country Name</label>
       <div class="input-row">
-        <input id="countryInput" name="country" type="text" placeholder="Try Japan, Brazil, Kenya..." autocomplete="off" />
+        <input id="countryInput" name="country" type="text" placeholder="Try United, Japan, Brazil, or Kenya..." autocomplete="off" />
         <button id="searchBtn" type="button">Search</button>
       </div>
       <p class="hint">Data source: REST Countries API</p>
