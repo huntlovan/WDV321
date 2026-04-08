@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WDV321 Advanced Javascript - JSON</title>
+<!--
+    Instructions:
+    	1. Incorporate the script.js file into this page as an external javascript file.
+
+      -- for the instructions below, the javascript should be added to the external script.js file --
+      2. Access the JSON data in local storage and convert it into a javascript array of objects.
+      3. Use the information in the array to complete a student card for EACH student object.
+      4. Account for the fact that there could be a random number of student objects in the array.
+      5. Add a form to allow adding a new student object to the array
+        a. Adding a new student will update local storage
+        b. Make sure the newly added student is displayed on the page.
+      6. Do not use jQuery, use plain Javascript
+-->
+  <style>
+    .studentCard	{
+      width:200px;
+      box-sizing:border-box;
+      background-color:lightblue;
+      padding-left:5px;
+      padding-top:3px;
+      border:thin solid blue;
+      box-shadow: 2px 2px 2px grey;
+    }
+
+    .studentCard h3	{
+      margin:0px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>WDV321 Advanced Javascript</h1>
+  <h2>Unit-8 JSON Objects</h2>
+  <h3>Creating and consuming a JSON object</h3>
+
+  <form id="addStudentForm">
+    <h3>Add New Student</h3>
+    <p>
+      <label for="studentId">Student ID:</label>
+      <input id="studentId" name="studentId" type="number" required>
+    </p>
+    <p>
+      <label for="studentGpa">Student GPA:</label>
+      <input id="studentGpa" name="studentGpa" type="number" step="0.01" min="0" max="4" required>
+    </p>
+    <p>
+      <label for="studentCourses">Student Courses (comma separated):</label>
+      <input id="studentCourses" name="studentCourses" type="text" required>
+    </p>
+    <button type="submit">Add Student</button>
+  </form>
+
+  <div id="studentCards">
+    <!-- Student cards will be generated here -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
