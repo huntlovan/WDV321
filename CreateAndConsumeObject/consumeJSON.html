@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  
+  <!--This page will create a JavaScript object and store it in local storage-->
+<head>
+<meta charset="utf-8">
+<title>WDV321 Advanced Javascript - JSON</title>
+  <!--
+      Instructions:
+        1. Incorporate the script.js file into this page as an external javascript file.
+        2. Add the necessary Javascript code to it to:
+          a. Access the JSON object in local storage and convert it into a Javascript object.
+          b. Use the information in the object to complete the student card.
+  -->
+  <style>
+    .studentCard	{
+      width:200px;
+      box-sizing:border-box;
+      background-color:lightblue;
+      padding-left:5px;
+      padding-top:3px;
+      border:thin solid blue;
+      box-shadow: 2px 2px 2px grey;
+    }
+
+    .studentCard h3	{
+      margin:0px;
+    }
+  </style>
+  <script src="consumeJSON.js" defer></script>
+</head>
+
+<body>
+	<h1>WDV321 Advanced Javascript</h1>
+  <h2>Unit-8 JSON Objects</h2>
+  <h3>Creating and consuming a JSON object</h3>
+
+  <div class="studentCard">
+	  <h3 id="studentId">Student ID:</h3>
+    <p id="studentGpa">Student GPA:</p>
+    Student Courses:
+    <ul id="studentCourses">
+      <!-- display the courses as list items -->
+    </ul>
+  </div>
+</body>
+</html>
