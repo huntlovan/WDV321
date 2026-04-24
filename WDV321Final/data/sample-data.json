@@ -1,0 +1,177 @@
+[
+    {
+        "name": "Spaghetti X Carbonara",
+        "image": "./images/SpaghettiCarbonara.jpg",
+        "ingredients": [
+            "400g spaghetti",
+            "200g pancetta",
+            "4 eggs",
+            "100g Parmesan cheese",
+            "Black pepper",
+            "Salt"
+        ],
+        "instructions": [
+            "Cook spaghetti until al dente",
+            "Fry pancetta until crispy",
+            "Mix eggs with grated cheese",
+            "Combine all ingredients",
+            "Season with pepper and serve"
+        ],
+        "time": 20,
+        "servings": 4
+    },
+    {
+        "name": "Caesar Salad",
+        "image": "./images/salad.jpg",
+        "ingredients": [
+            "2 romaine lettuces",
+            "Parmesan cheese",
+            "1 cup croutons",
+            "4 cloves garlic",
+            "2 tbsp olive oil",
+            "Lemon juice"
+        ],
+        "instructions": [
+            "Wash and chop romaine lettuce",
+            "Make Caesar dressing",
+            "Toss lettuce with dressing",
+            "Add croutons and cheese",
+            "Serve immediately"
+        ],
+        "time": 15,
+        "servings": 4
+    },
+    {
+        "name": "Tomato Soup",
+        "image": "./images/soup.jpg",
+        "ingredients": [
+            "1kg tomatoes",
+            "2 onions",
+            "4 cloves garlic",
+            "1L vegetable broth",
+            "Cream",
+            "Basil"
+        ],
+        "instructions": [
+            "Chop tomatoes and onions",
+            "Sauté garlic and onions",
+            "Add tomatoes and broth",
+            "Simmer for 20 minutes",
+            "Blend smooth",
+            "Add cream and serve"
+        ],
+        "time": 35,
+        "servings": 4
+    },
+    {
+        "name": "Pineapple Cake",
+        "image": "https://via.placeholder.com/280x200?text=Pineapple+Cake",
+        "ingredients": [
+            "Cake:",
+            "2 1/2 cups all-purpose flour",
+            "1 1/2 cups granulated sugar",
+            "1 cup buttermilk (or milk + 1 tbsp vinegar)",
+            "1/2 cup unsalted butter, softened",
+            "1/2 cup vegetable oil",
+            "4 egg whites",
+            "1 tablespoon baking powder",
+            "1/2 teaspoon salt",
+            "1 teaspoon vanilla extract",
+            "1 cup crushed pineapple, drained (reserve juice)",
+            "Pineapple Syrup (optional but amazing):",
+            "1/2 cup reserved pineapple juice",
+            "1/4 cup sugar",
+            "Frosting (Pineapple Cream Cheese):",
+            "8 oz cream cheese, softened",
+            "1/2 cup unsalted butter, softened",
+            "3 cups powdered sugar",
+            "2-3 tablespoons pineapple juice",
+            "1/2 cup crushed pineapple, well drained",
+            "1 teaspoon vanilla"
+        ],
+        "instructions": [
+            "1. Make the Cake: Preheat oven to 350F (175C).",
+            "Grease and flour two 8-inch round pans or a 9x13 pan.",
+            "In a large bowl, beat butter, oil, and sugar until fluffy.",
+            "Add egg whites and vanilla; mix until smooth.",
+            "In a separate bowl, whisk flour, baking powder, and salt.",
+            "Add dry ingredients to the wet mixture, alternating with buttermilk.",
+            "Fold in the drained crushed pineapple.",
+            "Pour into pans and bake 25-30 minutes or until a toothpick comes out clean.",
+            "Cool completely.",
+            "2. Pineapple Syrup (Optional): Heat pineapple juice and sugar in a small saucepan.",
+            "Simmer 3-4 minutes until slightly thickened.",
+            "Brush over warm cake layers.",
+            "3. Frosting: Beat cream cheese and butter until smooth.",
+            "Add powdered sugar gradually.",
+            "Mix in pineapple juice, vanilla, and crushed pineapple.",
+            "Chill 10 minutes to firm up.",
+            "4. Assemble: Spread frosting between layers.",
+            "Frost the outside.",
+            "Decorate with pineapple chunks or coconut if desired."
+        ],
+        "time": 55,
+        "servings": 12
+    },
+    {
+        "name": "Zucchini Bread",
+        "image": "https://via.placeholder.com/280x200?text=Zucchini+Bread",
+        "ingredients": [
+            "2 cups all-purpose flour",
+            "1 teaspoon baking soda",
+            "1 teaspoon baking powder",
+            "1/2 teaspoon salt",
+            "1 teaspoon ground cinnamon",
+            "2 eggs",
+            "1 cup granulated sugar",
+            "1/2 cup vegetable oil",
+            "1 teaspoon vanilla extract",
+            "2 cups grated zucchini"
+        ],
+        "instructions": [
+            "Preheat oven to 350F (175C). Grease a loaf pan.",
+            "Whisk flour, baking soda, baking powder, salt, and cinnamon in a bowl.",
+            "In another bowl, beat eggs, sugar, oil, and vanilla until combined.",
+            "Stir dry ingredients into wet ingredients until just mixed.",
+            "Fold in grated zucchini.",
+            "Pour batter into pan and bake 50-60 minutes, until a toothpick comes out clean.",
+            "Cool in the pan for 10 minutes, then transfer to a rack to cool completely."
+        ],
+        "time": 70,
+        "servings": 10
+    },
+    {
+        "name": "Ox Tale Stew",
+        "image": "https://via.placeholder.com/280x200?text=Ox+Tale+Stew",
+        "ingredients": [
+            "3 lbs oxtail pieces",
+            "2 tablespoons vegetable oil",
+            "1 large onion, chopped",
+            "3 carrots, sliced",
+            "3 celery stalks, sliced",
+            "4 cloves garlic, minced",
+            "2 tablespoons tomato paste",
+            "4 cups beef broth",
+            "1 cup red wine or extra broth",
+            "3 potatoes, cut into chunks",
+            "2 teaspoons thyme",
+            "2 bay leaves",
+            "1 teaspoon smoked paprika",
+            "Salt",
+            "Black pepper"
+        ],
+        "instructions": [
+            "Season oxtail with salt and pepper.",
+            "Heat oil in a large Dutch oven and brown the oxtail on all sides, then remove and set aside.",
+            "Add onion, carrots, and celery to the pot and cook until softened.",
+            "Stir in garlic and tomato paste and cook for 1 minute.",
+            "Pour in beef broth and red wine, scraping up any browned bits from the bottom of the pot.",
+            "Return oxtail to the pot and add thyme, bay leaves, and smoked paprika.",
+            "Bring to a simmer, cover, and cook on low heat for 2 1/2 to 3 hours until the meat is tender.",
+            "Add potatoes during the last 40 minutes of cooking and simmer until fork-tender.",
+            "Taste and adjust seasoning, then serve hot."
+        ],
+        "time": 210,
+        "servings": 6
+    }
+]

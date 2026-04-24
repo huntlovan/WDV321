@@ -1,0 +1,445 @@
+/* General Styles */
+:root {
+    --lavender-banner: #f5efff;
+    --lavender-text: #3b2f56;
+    --lavender-main: #8f63c9;
+    --lavender-hover: #7a4eb4;
+    --lavender-accent: #6b43a3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3ece0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.78)), url('../images/pattern.png');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--lavender-banner);
+    color: var(--lavender-text);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h1 {
+    font-size: 28px;
+}
+
+/* Buttons */
+.btn-add,
+.btn-back,
+.btn-submit,
+.btn-delete,
+.btn-edit {
+    padding: 10px 20px;
+    background-color: var(--lavender-main);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-edit {
+    background-color: var(--lavender-main);
+}
+
+.btn-add:hover,
+.btn-submit:hover {
+    background-color: var(--lavender-hover);
+}
+
+.btn-back:hover {
+    background-color: var(--lavender-hover);
+}
+
+.btn-edit:hover {
+    background-color: var(--lavender-hover);
+}
+
+.btn-delete:hover {
+    background-color: var(--lavender-hover);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Recipe List */
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.recipe-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recipe-card:focus-visible {
+    outline: 3px solid var(--lavender-accent);
+    outline-offset: 3px;
+    transform: translateY(-3px);
+}
+
+.recipe-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: #ecf0f1;
+}
+
+.recipe-info {
+    padding: 15px;
+}
+
+.recipe-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.recipe-meta {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+/* Recipe Detail View */
+.recipe-detail {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-detail.hidden {
+    display: none;
+}
+
+.recipe-detail h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.recipe-detail img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.recipe-detail-section {
+    margin-bottom: 25px;
+}
+
+.recipe-detail-section h3 {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--lavender-accent);
+    padding-bottom: 5px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 2px solid var(--lavender-accent);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.section-header h3 {
+    margin-bottom: 0;
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.toggle-section-btn {
+    padding: 6px 12px;
+    border: 1px solid #cbb9e6;
+    border-radius: 999px;
+    background: #f8f3ff;
+    color: var(--lavender-text);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.toggle-section-btn:hover {
+    background: #efe6ff;
+    border-color: #b39ad9;
+}
+
+.toggle-section-btn:focus-visible {
+    outline: 2px solid var(--lavender-accent);
+    outline-offset: 2px;
+}
+
+.detail-content-panel {
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.detail-content-panel.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.recipe-detail-section ul,
+.recipe-detail-section ol {
+    margin-left: 20px;
+}
+
+.recipe-detail-section li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.recipe-detail-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Form Styles */
+.recipe-form {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--lavender-accent);
+    box-shadow: 0 0 5px rgba(142, 99, 196, 0.3);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--lavender-accent);
+    outline-offset: 2px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.dynamic-list {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.input-with-button {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.input-with-button input {
+    flex: 1;
+    margin: 0;
+}
+
+.btn-remove {
+    background-color: var(--lavender-main);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+.btn-remove:hover {
+    background-color: var(--lavender-hover);
+}
+
+.btn-add-more {
+    background-color: var(--lavender-main);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-add-more:hover {
+    background-color: var(--lavender-hover);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.image-preview {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Utility */
+.hidden {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar h1 {
+        font-size: 20px;
+    }
+
+    .recipe-list {
+        grid-template-columns: 1fr;
+    }
+
+    .recipe-detail {
+        padding: 20px;
+    }
+
+    .recipe-detail h2 {
+        font-size: 24px;
+    }
+
+    .recipe-detail-buttons {
+        flex-wrap: wrap;
+    }
+
+    .toggle-section-btn {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .input-with-button {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-remove,
+    .btn-add-more {
+        width: 100%;
+    }
+
+    .btn-add,
+    .btn-back,
+    .btn-submit,
+    .btn-delete,
+    .btn-edit,
+    .btn-remove,
+    .btn-add-more {
+        font-size: 15px;
+        min-height: 44px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--Comment
+        Hunter Lovan 4/20/2026 WDV321
+        Purpose of this exercise is to review the dynamic content capabillity in JavaScript.
+    This project is for educational purposes only.
+        acknowledgements: assisted by ChatGPT to debug, optimize code, more extendable,and improve clarity by adding documentation.
+  -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Hunter Lovan">
+    <title>Add Recipe</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>➕ Add New Recipe</h1>
+        <a href="index.html" class="btn-back">← Back to Recipes</a>
+    </nav>
+
+    <main class="container">
+        <form id="recipe-form" class="recipe-form">
+            <!-- Recipe Name -->
+            <div class="form-group">
+                <label for="recipe-name">Recipe Name *</label>
+                <input type="text" id="recipe-name" required placeholder="e.g., Spaghetti Carbonara">
+                <div class="error-message" id="error-name">Recipe name is required</div>
+            </div>
+
+            <!-- Image Selection -->
+            <div class="form-group">
+                <label for="recipe-image">Select Image *</label>
+                <select id="recipe-image" required>
+                    <option value="">-- Choose an image --</option>
+                </select>
+                <div class="error-message" id="error-image">Please select an image</div>
+                <div class="image-preview">
+                    <img id="image-preview" src="" alt="Recipe preview" style="display: none;">
+                </div>
+            </div>
+
+            <!-- Ingredients Section -->
+            <div class="form-group">
+                <label>Ingredients *</label>
+                <div class="dynamic-list" id="ingredients-list">
+                    <div class="input-with-button">
+                        <input type="text" class="ingredient-input" placeholder="e.g., 400g spaghetti" required>
+                        <button type="button" class="btn-remove" onclick="removeIngredient(this)">Remove</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add-more" onclick="addIngredient()">+ Add Ingredient</button>
+                <div class="error-message" id="error-ingredients">At least one ingredient is required</div>
+            </div>
+
+            <!-- Instructions Section -->
+            <div class="form-group">
+                <label>Instructions *</label>
+                <div class="dynamic-list" id="instructions-list">
+                    <div class="input-with-button">
+                        <input type="text" class="instruction-input" placeholder="e.g., Cook spaghetti until al dente" required>
+                        <button type="button" class="btn-remove" onclick="removeInstruction(this)">Remove</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add-more" onclick="addInstruction()">+ Add Instruction</button>
+                <div class="error-message" id="error-instructions">At least one instruction is required</div>
+            </div>
+
+            <!-- Time and Servings -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="recipe-servings">Servings *</label>
+                    <input type="number" id="recipe-servings" min="1" value="4" required>
+                    <div class="error-message" id="error-servings">Servings must be at least 1</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="recipe-time">Cooking Time (minutes) *</label>
+                    <input type="number" id="recipe-time" min="1" value="30" required>
+                    <div class="error-message" id="error-time">Cooking time must be at least 1 minute</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">✅ Add Recipe</button>
+        </form>
+    </main>
+
+    <script src="js/input.js"></script>
+</body>
+</html>
